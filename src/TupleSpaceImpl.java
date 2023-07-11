@@ -13,6 +13,7 @@ public class TupleSpaceImpl extends UnicastRemoteObject implements TupleSpaceInt
 
     public String lookup(String songName) throws RemoteException {
         //Implementation here
+        System.out.println(songName);
         if (songs.containsKey(songName)) {
             return "Song found";
         } else {
@@ -46,10 +47,16 @@ public class TupleSpaceImpl extends UnicastRemoteObject implements TupleSpaceInt
         }
     }
 
-    public void write(SongObject song) throws RemoteException {
+    public boolean write(SongObject song) throws RemoteException {
         // Implementation
-        songs.put(song.getName(), song);
-        System.out.println("Song Added Sucessfully");
 
+        try {
+            songs.put(song.getName(), song);
+            System.out.println("Song Added Sucessfully");
+            return true;
+        } catch(Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }
