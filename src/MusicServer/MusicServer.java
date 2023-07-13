@@ -1,7 +1,8 @@
-package src;
+package src.MusicServer;
 import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import src.Interfaces.TupleSpaceImpl;
 
 public class MusicServer {
     public static void main(String args[]) {
