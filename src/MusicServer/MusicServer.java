@@ -14,7 +14,7 @@ public class MusicServer {
             LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
 
             //Bind the Tuple Space object to the RMI registery
-            Naming.rebind("//localhost/TupleSpace", tupleSpace);
+            Naming.rebind("rmi://localhost/TupleSpace", tupleSpace);
 
             System.out.println("Server Started");
         } catch (Exception e) {

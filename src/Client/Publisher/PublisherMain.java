@@ -1,9 +1,9 @@
 package src.Client.Publisher;
 
 public class PublisherMain {
-    public static void Main(String[] args) {
+    public static void main(String[] args) {
         Publisher publisher = new Publisher();
-        publisher.authentication();
+        publisher.userLogin();
         publisher.writeSong();
     }
 }

@@ -4,24 +4,24 @@ import java.io.InputStreamReader;
 import java.rmi.Naming;
 import java.util.Map;
 import src.Data.SongObject;
-import src.Interfaces.TupleSpaceInterface;
+import src.Servant.RadioSparkApp;
 
 public class Subscriber {
 
-    private TupleSpaceInterface tupleSpace;
+    private RadioSparkApp tupleSpace;
     private BufferedReader input;
 
     public Subscriber() {
         try {
             String name = "//localhost/TupleSpace";
-            tupleSpace = (TupleSpaceInterface) Naming.lookup(name);
+            tupleSpace = (RadioSparkApp) Naming.lookup(name);
             input = new BufferedReader(new InputStreamReader(System.in));
         } catch(Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void authentication() {
+    public void userLogIn() {
         try {
             System.out.println("Enter your username: ");
             String userName = input.readLine();
@@ -29,7 +29,7 @@ public class Subscriber {
             System.out.println("Enter your password: ");
             String password = input.readLine();
 
-            Map<String, Object> authresult = tupleSpace.authentication(userName, password);
+            Map<String, Object> authresult = tupleSpace.userSignIn(userName, password);
             System.out.println(authresult);
         } catch(Exception e) {
             e.printStackTrace();
@@ -42,14 +42,14 @@ public class Subscriber {
             String songInput = input.readLine();
 
             // Lookup Operation
-            System.out.println(tupleSpace.lookup(songInput));
+            System.out.println(tupleSpace.getSongsList());
 
             // Read operation
-            Map<String, Object> songDetails = tupleSpace.read(songInput);
+            Map<String, Object> songDetails = tupleSpace.getSongDetails(songInput);
             System.out.println(songDetails);
 
             // Take Operation
-            SongObject takeSong = tupleSpace.take(songInput);
+            SongObject takeSong = tupleSpace.takeSong(songInput);
             System.out.println(takeSong.getData());
         } catch (Exception e) {
             e.printStackTrace();
