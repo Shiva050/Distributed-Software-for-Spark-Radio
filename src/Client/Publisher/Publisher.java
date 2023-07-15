@@ -24,44 +24,43 @@ public class Publisher {
         }
     }
 
-    public String userLogin() {
-        String loggedInUserRole = null;
+    public Map<String, Object> userLogin() {
+        Map<String, Object> authResult = null;
         try {
-            System.out.println("Enter your username: ");
+            System.out.print("Enter your username: ");
             String userName = input.readLine();
 
-            System.out.println("Enter your password: ");
+            System.out.print("Enter your password: ");
             String password = input.readLine();
 
-            Map<String, Object> authresult = tupleSpace.userSignIn(userName, password);
-            loggedInUserRole = authresult.get("Role").toString();
+            authResult = tupleSpace.userSignIn(userName, password);
         } catch(Exception e) {
             e.printStackTrace();
         }
-        return loggedInUserRole;
+        return authResult;
     }
 
     public void writeSong() {
         try {
             // Read the song file and convert it to a binary array
 
-            System.out.println("Enter the name of the song you want to publish: ");
+            System.out.print("Enter the name of the song you want to publish: ");
             String songName = input.readLine();
 
-            System.out.println("Enter the album name of your song: ");
+            System.out.print("Enter the album name of your song: ");
             String aulbum = input.readLine();
 
-            System.out.println("Enter the artist name of your song: ");
+            System.out.print("Enter the artist name of your song: ");
             String artist = input.readLine();
 
-            System.out.println("Enter the duration of your song (hours:minutes:seconds): ");
+            System.out.print("Enter the duration of your song (hours:minutes:seconds): ");
             String[] timeString = input.readLine().split(":");
             int hours = Integer.parseInt(timeString[0]);
             int minutes = Integer.parseInt(timeString[1]);
             int seconds = Integer.parseInt(timeString[2]); 
             Duration duration = Duration.ofHours(hours).plusMinutes(minutes).plusSeconds(seconds);
 
-            System.out.println("Enter the name of your song (without extension): ");
+            System.out.print("Enter the name of your song (without extension): ");
             String songValue = input.readLine();
             
             String songPath = "../src/Client/Publisher/Songs/"+songValue+".mp3";

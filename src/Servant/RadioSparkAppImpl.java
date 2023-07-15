@@ -111,7 +111,7 @@ public class RadioSparkAppImpl extends UnicastRemoteObject implements RadioSpark
         }
 
         if (password.equalsIgnoreCase(userPasswords.get(userName)[0])) {
-            System.out.println("Authenticated");
+            System.out.println(userPasswords.get(userName)[1] + " Authenticated");
             role = userPasswords.get(userName)[1];
             isAuthenticated = true;
             // break;
@@ -119,7 +119,8 @@ public class RadioSparkAppImpl extends UnicastRemoteObject implements RadioSpark
             System.out.println("Incorrect password.\nPlease try again with a valid password.");
         }
 
-        result.put("Role", role);
+        result.put("user", userName);
+        result.put("Role", (role == null) ? "Not Authenticated" : role);
         result.put("AuthStatus", isAuthenticated);
         return result;
     }

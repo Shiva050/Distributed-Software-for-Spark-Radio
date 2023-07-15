@@ -22,26 +22,25 @@ public class Subscriber {
         }
     }
 
-    public String userLogIn() {
-        String loggedInUserRole = null;
+    public Map<String, Object> userLogin() {
+        Map<String, Object> authResult = null;
         try {
-            System.out.println("Enter your username: ");
+            System.out.print("Enter your username: ");
             String userName = input.readLine();
 
-            System.out.println("Enter your password: ");
+            System.out.print("Enter your password: ");
             String password = input.readLine();
 
-            Map<String, Object> authresult = tupleSpace.userSignIn(userName, password);
-            loggedInUserRole = authresult.get("Role").toString();
+            authResult = tupleSpace.userSignIn(userName, password);
         } catch(Exception e) {
             e.printStackTrace();
         }
-        return loggedInUserRole;
+        return authResult;
     }
 
     public void searchSong() {
         try {
-            System.out.println("Enter the song name you want to search: ");
+            System.out.print("Enter the song name you want to search: ");
             String songInput = input.readLine();
 
             // Lookup Operation
