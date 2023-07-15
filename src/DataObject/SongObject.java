@@ -1,7 +1,6 @@
-package src.Data;
+package src.DataObject;
 import java.io.Serializable;
 import java.time.Duration;
-import java.util.List;
 
 public class SongObject implements Serializable {
     private String name;

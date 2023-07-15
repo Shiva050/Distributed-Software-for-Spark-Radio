@@ -6,24 +6,26 @@ import java.nio.file.Files;
 import java.rmi.Naming;
 import java.time.Duration;
 import java.util.Map;
-import src.Data.SongObject;
-import src.Servant.RadioSparkAppImpl;
+
+import src.DataObject.SongObject;
+import src.Servant.RadioSparkApp;
 
 public class Publisher {
-    private RadioSparkAppImpl tupleSpace;
+    private RadioSparkApp tupleSpace;
     private BufferedReader input;
 
     public Publisher() {
         try {
             String name = "//localhost/TupleSpace";
-            tupleSpace = (RadioSparkAppImpl) Naming.lookup(name);
+            tupleSpace = (RadioSparkApp) Naming.lookup(name);
             input = new BufferedReader(new InputStreamReader(System.in));
         } catch(Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void userLogin() {
+    public String userLogin() {
+        String loggedInUserRole = null;
         try {
             System.out.println("Enter your username: ");
             String userName = input.readLine();
@@ -32,10 +34,11 @@ public class Publisher {
             String password = input.readLine();
 
             Map<String, Object> authresult = tupleSpace.userSignIn(userName, password);
-            System.out.println(authresult);
+            loggedInUserRole = authresult.get("Role").toString();
         } catch(Exception e) {
             e.printStackTrace();
         }
+        return loggedInUserRole;
     }
 
     public void writeSong() {

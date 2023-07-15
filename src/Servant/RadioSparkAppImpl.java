@@ -5,7 +5,8 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Map;
-import src.Data.SongObject;
+
+import src.DataObject.SongObject;
 import src.TupleSpace.TupleSpace;
 
 import java.util.Collections;
@@ -27,7 +28,7 @@ public class RadioSparkAppImpl extends UnicastRemoteObject implements RadioSpark
     // Implementation of Subscriber methods
     public Map<String, Object> getSongDetails(String songName) throws RemoteException {
         //Implemengtation here
-        if (tupleSpace.containsKey(songName)) {
+        if (tupleSpace.isPresent(songName)) {
             Map<String, Object> resultMap = new HashMap<>();
             SongObject result = (SongObject) tupleSpace.getItem(songName);
             resultMap.put("Name", result.getName());
@@ -48,7 +49,7 @@ public class RadioSparkAppImpl extends UnicastRemoteObject implements RadioSpark
     }
 
     public SongObject takeSong(String songName) throws RemoteException {
-        if (tupleSpace.containsKey(songName)) {
+        if (tupleSpace.isPresent(songName)) {
             return (SongObject) tupleSpace.getItem(songName);
         } else {
             System.out.println("Sorry!, Song requested was not available");
@@ -81,7 +82,7 @@ public class RadioSparkAppImpl extends UnicastRemoteObject implements RadioSpark
     public String isSongAvailable(String songName) throws RemoteException {
         //Implementation here
         System.out.println(songName);
-        if (tupleSpace.containsKey(songName)) {
+        if (tupleSpace.isPresent(songName)) {
             return "Song found";
         } else {
             return "Song not found";
@@ -102,22 +103,20 @@ public class RadioSparkAppImpl extends UnicastRemoteObject implements RadioSpark
             }
         }
 
-        while(true) {
-            if(userPasswords.containsKey(userName)) {
-                System.out.println("Valid User");
-            } else {
-                System.out.println("Invalid username. \nPlease try again with a different username.");
-                continue;
-            }
+        if(userPasswords.containsKey(userName)) {
+            System.out.println("Valid User");
+        } else {
+            System.out.println("Invalid username. \nPlease try again with a different username.");
+            // continue;
+        }
 
-            if (password.equalsIgnoreCase(userPasswords.get(userName)[0])) {
-                System.out.println("Authenticated");
-                role = userPasswords.get(userName)[1];
-                isAuthenticated = true;
-                break;
-            } else {
-                System.out.println("Incorrect password.\nPlease try again with a valid password.");
-            }
+        if (password.equalsIgnoreCase(userPasswords.get(userName)[0])) {
+            System.out.println("Authenticated");
+            role = userPasswords.get(userName)[1];
+            isAuthenticated = true;
+            // break;
+        } else {
+            System.out.println("Incorrect password.\nPlease try again with a valid password.");
         }
 
         result.put("Role", role);
@@ -132,7 +131,7 @@ public class RadioSparkAppImpl extends UnicastRemoteObject implements RadioSpark
     public void readUsersFile() {
         BufferedReader reader = null;
         try {
-            reader = new BufferedReader(new FileReader("../security/userList.txt"));
+            reader = new BufferedReader(new FileReader("../Database/userList.txt"));
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] columns = line.split(" ");

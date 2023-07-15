@@ -3,7 +3,8 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Map;
-import src.Data.SongObject;
+
+import src.DataObject.SongObject;
 
 public interface RadioSparkApp extends Remote {
     // Publisher methods

@@ -2,13 +2,14 @@ package src.MusicServer;
 import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import src.Interfaces.TupleSpaceImpl;
+
+import src.Servant.RadioSparkAppImpl;
 
 public class MusicServer {
     public static void main(String args[]) {
         try {
             // Create an instance of Tuple Space Implementation
-            TupleSpaceImpl tupleSpace = new TupleSpaceImpl();
+            RadioSparkAppImpl tupleSpace = new RadioSparkAppImpl();
 
             //Start the RMI registry on the default port
             LocateRegistry.createRegistry(Registry.REGISTRY_PORT);

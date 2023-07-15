@@ -3,7 +3,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.rmi.Naming;
 import java.util.Map;
-import src.Data.SongObject;
+
+import src.DataObject.SongObject;
 import src.Servant.RadioSparkApp;
 
 public class Subscriber {
@@ -21,7 +22,8 @@ public class Subscriber {
         }
     }
 
-    public void userLogIn() {
+    public String userLogIn() {
+        String loggedInUserRole = null;
         try {
             System.out.println("Enter your username: ");
             String userName = input.readLine();
@@ -30,10 +32,11 @@ public class Subscriber {
             String password = input.readLine();
 
             Map<String, Object> authresult = tupleSpace.userSignIn(userName, password);
-            System.out.println(authresult);
+            loggedInUserRole = authresult.get("Role").toString();
         } catch(Exception e) {
             e.printStackTrace();
         }
+        return loggedInUserRole;
     }
 
     public void searchSong() {

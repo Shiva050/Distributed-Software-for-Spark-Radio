@@ -1,7 +1,8 @@
 package src.TupleSpace;
 import java.util.HashMap;
 import java.util.Map;
-import src.Data.SongObject;
+
+import src.DataObject.SongObject;
 
 public class TupleSpace {
     private Map<String, SongObject> tupleSpace;
@@ -22,7 +23,7 @@ public class TupleSpace {
         tupleSpace.remove(key);
     }
 
-    public boolean containsKey(String key) { // check if the item is present in tuple space or not
+    public boolean isPresent(String key) { // check if the item is present in tuple space or not
         return tupleSpace.containsKey(key);
     }
 
