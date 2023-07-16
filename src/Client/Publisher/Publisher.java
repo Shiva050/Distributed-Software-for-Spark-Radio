@@ -17,6 +17,7 @@ public class Publisher {
     public Publisher() {
         try {
             String name = "//localhost/TupleSpace";
+            System.out.println("***** Welcome to Distrubuted Software for SparkRadio *****");
             tupleSpace = (RadioSparkApp) Naming.lookup(name);
             input = new BufferedReader(new InputStreamReader(System.in));
         } catch(Exception e) {

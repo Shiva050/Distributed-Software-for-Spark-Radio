@@ -1,6 +1,9 @@
 package src.Client.Publisher;
 
+
+import java.util.HashMap;
 import java.util.Map;
+import src.Client.Utils.CommonUtils;
 
 public class PublisherMain {
     
@@ -9,29 +12,27 @@ public class PublisherMain {
 
     public static void main(String[] args) {
 
+        Map<String, Boolean> menuOptions = new HashMap<>();
         Publisher publisher = new Publisher();
         boolean loggedIn = false;
 
-        while(!loggedIn) {
-            Map<String, Object> loginData = publisher.userLogin();
-            
-            if(loginData!=null & loginData.containsKey("user") & loginData.containsKey("Role")) {
-                user = loginData.get("user").toString();
-                role = loginData.get("Role").toString().toLowerCase();
+        menuOptions.put("Login", true);
+        menuOptions.put("Write a Song", false);
+        menuOptions.put("Delete a Song", false);
+        menuOptions.put("Logout", false);
+        menuOptions.put("Exit", true);
 
-                if (role.equals("publisher")) {
-                    System.out.println("\nHello " + user + ", welcome to the publisher portal..");
-                    publisher.writeSong();
-                    loggedIn = true;
-                } else if (role.equals("not authenticated")) {
-                    System.out.println("\nLogin attempt by the user " + user + " failed. Please try again...");
-                } else {
-                    System.out.println("Sorry, you are not authorized to enter the publish portal. \nYou only have client access.");
-                    break;
+        int choice = CommonUtils.diaplayMenu(menuOptions);
+        
+        switch (choice) {
+            case 1: 
+                if (!loggedIn) {
+                    loggedIn = CommonUtils.userLogIn(publisher, "publisher");
+                    menuOptions.put("Login", false);
+                    menuOptions.put("Write a Song", true);
+                    menuOptions.put("Delete a Song", true);
+                    menuOptions.put("Logout", true);
                 }
-            } else {
-                System.out.println("Failed to retrieve login data..\nPlease try again");
-            }
         }
     }
 }
