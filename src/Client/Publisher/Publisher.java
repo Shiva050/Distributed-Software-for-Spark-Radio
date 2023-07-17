@@ -4,41 +4,30 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.rmi.Naming;
+import java.rmi.RemoteException;
 import java.time.Duration;
-import java.util.Map;
 
+import src.Client.Utils.CommonUtils;
 import src.DataObject.SongObject;
 import src.Servant.RadioSparkApp;
 
 public class Publisher {
-    private RadioSparkApp tupleSpace;
+    private RadioSparkApp servant;
     private BufferedReader input;
 
     public Publisher() {
         try {
             String name = "//localhost/TupleSpace";
             System.out.println("***** Welcome to Distrubuted Software for SparkRadio *****");
-            tupleSpace = (RadioSparkApp) Naming.lookup(name);
+            servant = (RadioSparkApp) Naming.lookup(name);
             input = new BufferedReader(new InputStreamReader(System.in));
         } catch(Exception e) {
             e.printStackTrace();
         }
     }
 
-    public Map<String, Object> userLogin() {
-        Map<String, Object> authResult = null;
-        try {
-            System.out.print("Enter your username: ");
-            String userName = input.readLine();
-
-            System.out.print("Enter your password: ");
-            String password = input.readLine();
-
-            authResult = tupleSpace.userSignIn(userName, password);
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-        return authResult;
+    public boolean userLogin(String Role) {
+        return CommonUtils.userLogIn(servant, Role);
     }
 
     public void writeSong() {
@@ -72,9 +61,22 @@ public class Publisher {
             SongObject song = new SongObject(songName, artist, aulbum, duration, seconds, songData);
 
             // Publish the song to the tuple space
-            tupleSpace.writeSong(song);
+            if(servant.writeSong(song)) {
+                System.out.println("Song added to the Server Successfully...\n");
+            } else {
+                System.out.println("Sorry, Unabe to add the song...Please try again\n");
+            }
 
         } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void removeSong(String songName) {
+        try {
+            String result = (servant.deleteSong(songName)) ? "Song deleted successfully..\n" : "Sorry, could not find the given song....\n";
+            System.out.println(result);
+        } catch (RemoteException e) {
             e.printStackTrace();
         }
     }

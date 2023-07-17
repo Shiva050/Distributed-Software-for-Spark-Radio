@@ -19,8 +19,8 @@ public class TupleSpace {
         return tupleSpace.get(key);
     }
 
-    public void remove(String key) { // remove item from the tuple sapce
-        tupleSpace.remove(key);
+    public boolean remove(String key) { // remove item from the tuple sapce
+        return (tupleSpace.remove(key) != null) ? true : false;
     }
 
     public boolean isPresent(String key) { // check if the item is present in tuple space or not

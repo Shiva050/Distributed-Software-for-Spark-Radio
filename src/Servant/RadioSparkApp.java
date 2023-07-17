@@ -10,9 +10,9 @@ public interface RadioSparkApp extends Remote {
     // Publisher methods
     public boolean writeSong(SongObject song) throws RemoteException;
     public void updateSong(String songName) throws RemoteException;
-    public void deleteSong(String songName) throws RemoteException;
+    public boolean deleteSong(String songName) throws RemoteException;
 
-    // Client methodss
+    // Subscriber methodss
     public Map<String, Object> getSongDetails(String songName) throws RemoteException;
     public List<String> getSongsList() throws RemoteException;
     SongObject takeSong(String songName) throws RemoteException;

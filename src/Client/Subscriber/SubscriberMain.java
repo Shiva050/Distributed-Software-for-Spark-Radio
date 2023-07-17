@@ -1,38 +1,45 @@
 package src.Client.Subscriber;
 
+
+import java.util.HashMap;
 import java.util.Map;
+import src.Client.Utils.CommonUtils;
 
 public class SubscriberMain {
 
-    static String user = "";
-    static String role = "";
+    static String option = "";
 
     public static void main(String[] args) {
 
+        Map<String, Boolean> menuOptions = new HashMap<>();
         Subscriber subscriber = new Subscriber();
         boolean loggedIn = false;
 
-        while(!loggedIn) {
-            Map<String, Object> loginData = subscriber.userLogin();
-            
-            if(loginData!=null & loginData.containsKey("user") & loginData.containsKey("Role")) {
-                user = loginData.get("user").toString();
-                role = loginData.get("Role").toString().toLowerCase();
+        menuOptions.put("Login", true);
+        menuOptions.put("Get the Song Details", false);
+        menuOptions.put("Get the Songs collection", false);
+        menuOptions.put("Purchase the Songs", false);
+        menuOptions.put("Logout", false);
+        menuOptions.put("Exit", true);
 
-                if (role.equals("client")) {
-                    System.out.println("\nHello " + user + ", welcome to the client portal..");
-                    // Operations
-                    subscriber.searchSong();
-                    loggedIn = true;
-                } else if (role.equals("not authenticated")) {
-                    System.out.println("\nLogin attempt by the user " + user + " failed. Please try again...");
-                    break;
+        // Display Menu and get the selcted option 
+        option = CommonUtils.diaplayMenu(menuOptions);
+        
+        switch (option) {
+            case "Login": 
+                System.out.println("\nUser Login");
+                loggedIn = subscriber.userLogin("subscriber");
+                if(loggedIn) {
+                    menuOptions.put("Login", false);
+                    menuOptions.put("Get the Song Details", true);
+                    menuOptions.put("Get the Songs collection", true);
+                    menuOptions.put("Purchase the Songs", true);
+                    menuOptions.put("Logout", true);
+                    option = CommonUtils.diaplayMenu(menuOptions);
                 } else {
-                    System.out.println("Sorry, you are not authorized to enter the client portal. \nYou only have Publisher access.");
+                    System.out.println("Unable to Login....");
                 }
-            } else {
-                System.out.println("Failed to retrieve login data..\nPlease try again");
-            }
+                break;
         }
     }
 }

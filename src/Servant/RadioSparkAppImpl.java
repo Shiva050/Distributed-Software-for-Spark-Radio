@@ -74,8 +74,14 @@ public class RadioSparkAppImpl extends UnicastRemoteObject implements RadioSpark
         // 
     }
 
-    public void deleteSong(String songName) {
-        //
+    public boolean deleteSong(String songName) {
+        boolean result = false;
+        try {
+            result = tupleSpace.remove(songName);
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return result;
     }
 
     // Common Methods
