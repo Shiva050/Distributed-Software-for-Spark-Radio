@@ -1,8 +1,8 @@
 package src.Servant;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.List;
 import java.util.Map;
+import java.util.List;
 
 import src.DataObject.SongObject;
 
@@ -14,12 +14,12 @@ public interface RadioSparkApp extends Remote {
 
     // Subscriber methodss
     public Map<String, Object> getSongDetails(String songName) throws RemoteException;
-    public List<String> getSongsList() throws RemoteException;
-    SongObject takeSong(String songName) throws RemoteException;
+    public byte[] purchaseSong(String songName) throws RemoteException;
 
     // Common methods
-    public String isSongAvailable(String songName) throws RemoteException;
+    public List<String> lookUp(String songName) throws RemoteException;
     public Map<String, Object> userSignIn(String userName, String password) throws RemoteException;
-    public void userSignOut() throws RemoteException;
+    public List<String> getSongsList() throws RemoteException;
+    public boolean userSignOut() throws RemoteException;
 
 }

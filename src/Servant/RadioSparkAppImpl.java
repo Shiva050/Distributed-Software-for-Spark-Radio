@@ -5,11 +5,12 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import src.DataObject.SongObject;
 import src.TupleSpace.TupleSpace;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -17,15 +18,20 @@ public class RadioSparkAppImpl extends UnicastRemoteObject implements RadioSpark
     
     private Map<String, String[]> userPasswords;
     private TupleSpace tupleSpace;
+    private String username;
+    private Boolean userLoggedIn;
 
     
     public  RadioSparkAppImpl() throws RemoteException {
         
-        userPasswords = new HashMap<>();
-        tupleSpace = new TupleSpace();
+        this.userPasswords = new HashMap<>();
+        this.tupleSpace = new TupleSpace();
+        this.username = "";
+        this.userLoggedIn = false;
     }
 
     // Implementation of Subscriber methods
+
     public Map<String, Object> getSongDetails(String songName) throws RemoteException {
         //Implemengtation here
         if (tupleSpace.isPresent(songName)) {
@@ -44,20 +50,26 @@ public class RadioSparkAppImpl extends UnicastRemoteObject implements RadioSpark
     }
 
     public List<String> getSongsList() throws RemoteException{
-        List<String> emptyList = Collections.emptyList();
-        return emptyList;
+        List<String> songsList = new ArrayList<>(tupleSpace.getallSongs());
+        return songsList;
     }
 
-    public SongObject takeSong(String songName) throws RemoteException {
-        if (tupleSpace.isPresent(songName)) {
-            return (SongObject) tupleSpace.getItem(songName);
-        } else {
-            System.out.println("Sorry!, Song requested was not available");
+    public byte[] purchaseSong(String songName) throws RemoteException {
+        try {
+            if (tupleSpace.isPresent(songName)) {
+                SongObject song = tupleSpace.getItem(songName);
+                return song.getData();
+            } else {
+                System.out.println("Sorry!, Song requested was not available");
+                return null;
+            }
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
             return null;
         }
     }
 
-    // Implementation of Publisher methods
+    // Implementation of Publisher Methods
 
     public boolean writeSong(SongObject song) throws RemoteException {
         try {
@@ -84,15 +96,19 @@ public class RadioSparkAppImpl extends UnicastRemoteObject implements RadioSpark
         return result;
     }
 
-    // Common Methods
-    public String isSongAvailable(String songName) throws RemoteException {
-        //Implementation here
-        System.out.println(songName);
-        if (tupleSpace.isPresent(songName)) {
-            return "Song found";
-        } else {
-            return "Song not found";
+    // Implementation of Common Methods
+
+    public List<String> lookUp(String songName) throws RemoteException {
+        List<String> matchingSongs = null;
+        try {
+            List<String> songs = getSongsList();
+            matchingSongs = songs.stream()
+                    .filter(str -> str.contains(songName))
+                    .collect(Collectors.toList());
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
         }
+        return matchingSongs;
     }
 
     public Map<String, Object> userSignIn(String userName, String password) throws RemoteException {
@@ -120,6 +136,8 @@ public class RadioSparkAppImpl extends UnicastRemoteObject implements RadioSpark
             System.out.println(userPasswords.get(userName)[1] + " Authenticated");
             role = userPasswords.get(userName)[1];
             isAuthenticated = true;
+            this.username = userName;
+            this.userLoggedIn = true;
             // break;
         } else {
             System.out.println("Incorrect password.\nPlease try again with a valid password.");
@@ -131,8 +149,11 @@ public class RadioSparkAppImpl extends UnicastRemoteObject implements RadioSpark
         return result;
     }
 
-    public void userSignOut() {
-        //..
+    public boolean userSignOut() throws RemoteException {
+        System.out.println(this.username + " logged out");
+        this.userLoggedIn = false;
+        this.username = "";
+        return true;
     }
 
     public void readUsersFile() {
@@ -163,6 +184,4 @@ public class RadioSparkAppImpl extends UnicastRemoteObject implements RadioSpark
             }
         }
     }
-
-    
 }

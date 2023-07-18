@@ -1,5 +1,6 @@
 package src.TupleSpace;
 import java.util.HashMap;
+import java.util.Set;
 import java.util.Map;
 
 import src.DataObject.SongObject;
@@ -25,6 +26,10 @@ public class TupleSpace {
 
     public boolean isPresent(String key) { // check if the item is present in tuple space or not
         return tupleSpace.containsKey(key);
+    }
+
+    public Set<String> getallSongs() {
+        return tupleSpace.keySet();
     }
 
 }

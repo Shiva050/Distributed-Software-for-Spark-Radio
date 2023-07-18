@@ -1,8 +1,8 @@
 Username Password Role
-Anna a86H6T0c Client
-Tiffany G6M7p8az Client
-Cathie Pd826G57 Client
-Marise jO79bNs1 Client
+Anna a86H6T0c Subscriber
+Tiffany G6M7p8az Subscriber
+Cathie Pd826G57 Subscriber
+Marise jO79bNs1 Subscriber
 Tran uCh781fY Publisher
 Farah Cfw61RgV Publisher
 Shaz Kuz07YLv Publisher

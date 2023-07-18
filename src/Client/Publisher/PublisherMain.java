@@ -21,7 +21,7 @@ public class PublisherMain {
         menuOptions.put("Login", true);
         menuOptions.put("Write a Song", false);
         menuOptions.put("Delete a Song", false);
-        menuOptions.put("List the songs available", false);
+        menuOptions.put("Retrieve songs", false);
         menuOptions.put("Logout", false);
         menuOptions.put("Exit", true);
 
@@ -37,6 +37,7 @@ public class PublisherMain {
                         menuOptions.put("Login", false);
                         menuOptions.put("Write a Song", true);
                         menuOptions.put("Delete a Song", true);
+                        menuOptions.put("Retrieve songs", true);
                         menuOptions.put("Logout", true);
                     } else {
                         System.out.println("Unable to Login....");
@@ -68,13 +69,18 @@ public class PublisherMain {
                     }
                     break;
 
+                case "Retrieve songs":
+                    publisher.retrieveSongs();
+                    break;
+
                 case "Logout":
                     loggedIn = false;
+                    publisher.userSignOut();
                     menuOptions.put("Login", true);
                     menuOptions.put("Write a Song", false);
                     menuOptions.put("Delete a Song", false);
+                    menuOptions.put("Retrieve songs", false);
                     menuOptions.put("Logout", false);
-                    System.out.println("You are logged out successfully...\n");
                     break;
 
                 case "Exit":

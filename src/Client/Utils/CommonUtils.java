@@ -1,13 +1,19 @@
 package src.Client.Utils;
 
 import java.io.BufferedReader;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Map.Entry;
 
+import src.DataObject.SongObject;
 import src.Servant.RadioSparkApp;
 
 public class CommonUtils {
@@ -70,12 +76,12 @@ public class CommonUtils {
                     role = loginData.get("Role").toString().toLowerCase();
     
                     if (role.equals(calledRole)) {
-                        System.out.println("\nHello " + user + ", welcome to the publisher portal..");
+                        System.out.println("\nHello " + user + ", welcome to the " + calledRole + " portal..");
                         loggedIn = true;
                     } else if (role.equals("not authenticated")) {
                         System.out.println("\nLogin attempt by the user " + user + " failed. Please try again...");
                     } else {
-                        System.out.println("Sorry, you are not authorized to enter the publish portal. \nYou only have client access.");
+                        System.out.println("Sorry, you are not authorized to enter the " + calledRole + " portal. \nYou only have client access.");
                         break;
                     }
                 } else {
@@ -86,5 +92,33 @@ public class CommonUtils {
             e.printStackTrace();
         }
         return loggedIn;
+    }
+
+    public static void byteArraytoMp3(byte[] song, String songName) {
+        String directoryPath = "../Database/PurchasedSongs/";
+        String fileName = songName+".mp3";
+
+        // Create the directory if it doesn't exist
+        try {
+            Path directory = Paths.get(directoryPath);
+            if (!Files.exists(directory)) {
+                Files.createDirectories(directory);
+            }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            return;
+        }
+
+        // Write the byte array to an MP3 file
+        try (FileOutputStream fos = new FileOutputStream(directoryPath + fileName)) {
+            fos.write(song);
+            System.out.println("\nSong purchased successfully.\nSong has been added into your database directory..\n");
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void formatObject(Object songDetails) {
+        String name = songDetails
     }
 }

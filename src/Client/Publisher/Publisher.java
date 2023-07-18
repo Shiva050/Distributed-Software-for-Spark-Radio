@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.time.Duration;
+import java.util.List;
 
 import src.Client.Utils.CommonUtils;
 import src.DataObject.SongObject;
@@ -50,6 +51,9 @@ public class Publisher {
             int seconds = Integer.parseInt(timeString[2]); 
             Duration duration = Duration.ofHours(hours).plusMinutes(minutes).plusSeconds(seconds);
 
+            System.out.print("Enter the credits for your song: ");
+            int credits = Integer.parseInt(input.readLine());
+
             System.out.print("Enter the name of your song (without extension): ");
             String songValue = input.readLine();
             
@@ -58,7 +62,7 @@ public class Publisher {
             byte[] songData = Files.readAllBytes(new File(songPath).toPath());
 
             // Create a Song object
-            SongObject song = new SongObject(songName, artist, aulbum, duration, seconds, songData);
+            SongObject song = new SongObject(songName, artist, aulbum, duration, credits, songData);
 
             // Publish the song to the tuple space
             if(servant.writeSong(song)) {
@@ -78,6 +82,29 @@ public class Publisher {
             System.out.println(result);
         } catch (RemoteException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void userSignOut() {
+        try {
+            String result = servant.userSignOut() ? "You logged out successfully...\n" : "Failed to log you out..\n";
+            System.out.println(result);
+        } catch(RemoteException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void retrieveSongs() {
+        List<String> songsList = null;
+        try {
+            songsList = servant.getSongsList();
+            if (songsList.isEmpty()) {
+                System.out.println("No songs available...\n");
+            } else {
+                System.out.print("\nSongs in the server:" + songsList + "\n\n");
+            }
+        } catch(RemoteException e) {
+            System.out.println(e.getMessage());
         }
     }
 }
