@@ -119,6 +119,6 @@ public class CommonUtils {
     }
 
     public static void formatObject(Object songDetails) {
-        String name = songDetails
+        // String name = songDetails
     }
 }
