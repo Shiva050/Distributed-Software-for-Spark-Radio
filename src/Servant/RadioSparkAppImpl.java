@@ -84,6 +84,7 @@ public class RadioSparkAppImpl extends UnicastRemoteObject implements RadioSpark
             byte[] songData = song.getData();
     
             Map<String, Object> result = new HashMap<>();
+            result.put("user", this.subscriberusername);
             result.put("songData", songData);
             result.put("creditsUsed", creditsUsed);
             result.put("subscriberCredits", this.userCredits);
@@ -200,6 +201,7 @@ public class RadioSparkAppImpl extends UnicastRemoteObject implements RadioSpark
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new FileReader("../Database/userList.txt"));
+            reader.readLine();
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] columns = line.split(" ");
@@ -214,7 +216,7 @@ public class RadioSparkAppImpl extends UnicastRemoteObject implements RadioSpark
                 }
             }
         } catch (IOException e) {
-            System.out.print("Relay File Reader: " + e.getMessage());
+            System.out.print("File Reader: " + e.getMessage());
         } finally {
             if (reader != null) {
                 try {
