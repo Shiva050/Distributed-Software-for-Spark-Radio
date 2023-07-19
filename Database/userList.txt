@@ -1,8 +1,8 @@
-Username Password Role
-Anna a86H6T0c Subscriber
-Tiffany G6M7p8az Subscriber
-Cathie Pd826G57 Subscriber
-Marise jO79bNs1 Subscriber
-Tran uCh781fY Publisher
-Farah Cfw61RgV Publisher
-Shaz Kuz07YLv Publisher
+Username Password Role Credits
+Anna a86H6T0c Subscriber 5
+Tiffany G6M7p8az Subscriber 10
+Cathie Pd826G57 Subscriber 15
+Marise jO79bNs1 Subscriber 3
+Tran uCh781fY Publisher 10
+Farah Cfw61RgV Publisher 10
+Shaz Kuz07YLv Publisher 10

@@ -85,9 +85,9 @@ public class Publisher {
         }
     }
 
-    public void userSignOut() {
+    public void userSignOut(String role) {
         try {
-            String result = servant.userSignOut() ? "You logged out successfully...\n" : "Failed to log you out..\n";
+            String result = servant.userSignOut(role) ? "You logged out successfully...\n" : "Failed to log you out..\n";
             System.out.println(result);
         } catch(RemoteException e) {
             System.out.println(e.getMessage());

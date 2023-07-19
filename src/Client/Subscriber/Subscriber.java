@@ -29,9 +29,9 @@ public class Subscriber {
         return CommonUtils.userLogIn(servant, Role);
     }
 
-    public void userSignOut() {
+    public void userSignOut(String Role) {
         try {
-            String result = servant.userSignOut() ? "You logged out successfully...\n" : "Failed to log you out..\n";
+            String result = servant.userSignOut(Role) ? "You logged out successfully...\n" : "Failed to log you out..\n";
             System.out.println(result);
         } catch(RemoteException e) {
             System.out.println(e.getMessage());
@@ -40,7 +40,7 @@ public class Subscriber {
 
     public void getSongDetails() {
         try {
-            System.out.print("Enter the name of the song : ");
+            System.out.print("Enter the name of the song: ");
             String songName = input.readLine();
             Map<String, Object> songDetails = servant.getSongDetails(songName);
             CommonUtils.formatObject(songDetails);
@@ -88,11 +88,17 @@ public class Subscriber {
         try {
             System.out.print("Enter the song name: ");
             String songName = input.readLine();
-            
-            byte[] songFile = servant.purchaseSong(songName);
+
+            Map<String, Object> songFile = servant.purchaseSong(songName);
             if (songFile != null) {
-                CommonUtils.byteArraytoMp3(songFile, songName);
+                byte[] songData = (byte[]) songFile.get("songData");
+                int creditsUsed = (int) songFile.get("creditsUsed");
+                int subscriberCredits = (int) songFile.get("subscriberCredits");
+                // Process the song data and credits used
+                CommonUtils.byteArraytoMp3(songData, songName);
+                System.out.println("Credits utilized by the song are "+creditsUsed+". You are left with "+(subscriberCredits-creditsUsed) + " credits\n");
             } else {
+                // Handle the case where the song retrieval failed
                 System.out.println("Couldn't Retrieve the song from the server...\nPlease try again..");
             }
         } catch(RemoteException e) {

@@ -56,7 +56,7 @@ public class SubscriberMain {
 
                 case "Logout":
                     loggedIn = false;
-                    subscriber.userSignOut();
+                    subscriber.userSignOut("Subscriber");
                     menuOptions.put("Login", true);
                     menuOptions.put("Get the song details", false);
                     menuOptions.put("Purchase Song", false);

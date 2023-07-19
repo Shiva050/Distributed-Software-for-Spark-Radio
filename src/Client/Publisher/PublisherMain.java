@@ -75,7 +75,7 @@ public class PublisherMain {
 
                 case "Logout":
                     loggedIn = false;
-                    publisher.userSignOut();
+                    publisher.userSignOut("Publisher");
                     menuOptions.put("Login", true);
                     menuOptions.put("Write a Song", false);
                     menuOptions.put("Delete a Song", false);

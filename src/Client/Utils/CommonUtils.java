@@ -12,8 +12,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Map.Entry;
-
-import src.DataObject.SongObject;
 import src.Servant.RadioSparkApp;
 
 public class CommonUtils {
@@ -22,7 +20,7 @@ public class CommonUtils {
         int choice = 0;
         String option = null;
 
-        System.out.println("Please choose one of the actions::");
+        System.out.println("Please choose one of the actions:");
         ArrayList<String> selectedMenus = new ArrayList<>();
         int i = 0;
 
@@ -118,7 +116,16 @@ public class CommonUtils {
         }
     }
 
-    public static void formatObject(Object songDetails) {
-        // String name = songDetails
+    public static void formatObject(Map<String, Object>  songDetails) {
+        if (songDetails != null) {
+            System.out.println("\nSong details:");
+            System.out.println("Song Title: "+songDetails.get("Name"));
+            System.out.println("Album: "+songDetails.get("Album"));
+            System.out.println("Artist: "+songDetails.get("Artist"));
+            System.out.println("Duration: "+songDetails.get("Duration"));
+            System.out.println("Credits: "+songDetails.get("Credits") +"\n");    
+        } else {
+            System.out.println("Sorry, No song found with the name provided");
+        }
     }
 }

@@ -5,7 +5,7 @@ import java.time.Duration;
 public class SongObject implements Serializable {
     private String name;
     private String artist;
-    private String aulbum;
+    private String album;
     private Duration duration;
     private int credits;
     private byte[] data;
@@ -14,7 +14,7 @@ public class SongObject implements Serializable {
         this.name = name;
         this.artist = artist;
         this.data = data;
-        this.aulbum = aulbum;
+        this.album = aulbum;
         this.duration = duration;
         this.credits = credits;
     }
@@ -32,7 +32,7 @@ public class SongObject implements Serializable {
     }
 
     public String getAulbum() {
-        return this.aulbum;
+        return this.album;
     }
 
     public Duration getDuration() {
