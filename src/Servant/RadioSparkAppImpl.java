@@ -2,12 +2,16 @@ package src.Servant;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
+import src.Client.Utils.CommonUtils;
 import src.DataObject.SongObject;
 import src.TupleSpace.TupleSpace;
 
@@ -103,7 +107,11 @@ public class RadioSparkAppImpl extends UnicastRemoteObject implements RadioSpark
     public boolean writeSong(SongObject song) throws RemoteException {
         try {
             tupleSpace.addItem(song.getName(), song);
+
+            CommonUtils.byteArraytoMp3(song.getData(), song.getName(), "../src/MusicServer/Songs/");
+
             System.out.println("Song Added Sucessfully");
+
             return true;
         } catch(Exception e) {
             e.printStackTrace();

@@ -99,8 +99,8 @@ public class CommonUtils {
         return loggedIn;
     }
 
-    public static void byteArraytoMp3(byte[] song, String songName) {
-        String directoryPath = "../Database/PurchasedSongs/";
+    public static void byteArraytoMp3(byte[] song, String songName, String directoryPath) {
+        // String directoryPath = "../Database/PurchasedSongs/";
         String fileName = songName+".mp3";
 
         // Create the directory if it doesn't exist
