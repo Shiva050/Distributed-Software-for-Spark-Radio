@@ -99,8 +99,8 @@ public class CommonUtils {
         return loggedIn;
     }
 
-    public static void byteArraytoMp3(byte[] song, String songName) {
-        String directoryPath = "../Database/PurchasedSongs/";
+    public static void byteArraytoMp3(byte[] song, String songName, String directoryPath) {
+        // String directoryPath = "../Database/PurchasedSongs/";
         String fileName = songName+".mp3";
 
         // Create the directory if it doesn't exist
@@ -117,7 +117,9 @@ public class CommonUtils {
         // Write the byte array to an MP3 file
         try (FileOutputStream fos = new FileOutputStream(directoryPath + fileName)) {
             fos.write(song);
-            System.out.println("\nSong purchased successfully.\nSong has been added into your database directory..\n");
+            if (!directoryPath.contains("MusicServer")) {
+                System.out.println("\nSong purchased successfully.\nSong has been added into your database directory..\n");
+            }
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

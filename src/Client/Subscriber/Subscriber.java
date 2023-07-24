@@ -98,7 +98,7 @@ public class Subscriber {
                 creditsUsed = (int) songFile.get("creditsUsed");
                 subscriberCredits = (int) songFile.get("subscriberCredits");
                 // Process the song data and credits used
-                CommonUtils.byteArraytoMp3(songData, songName);
+                CommonUtils.byteArraytoMp3(songData, songName, "../Database/PurchasedSongs/");
                 CommonUtils.updateSubscriberCredits(userName, (subscriberCredits-creditsUsed));
                 System.out.println("Credits utilized by the song are "+creditsUsed+". You are left with "+(subscriberCredits-creditsUsed) + " credits\n");
             } else {
