@@ -209,6 +209,7 @@ public class CommonUtils {
         BufferedWriter writer = null;
         try {
             writer = new BufferedWriter(new FileWriter(FILE_PATH));
+            writer.write("Username Password Role Credits");
             for (Map.Entry<String, String[]> entry : creditsMap.entrySet()) {
                 String username = entry.getKey();
                 String[] values = entry.getValue();
@@ -218,6 +219,7 @@ public class CommonUtils {
                     line += value + DELIMITER;
                 }
                 writer.write(line);
+                writer.newLine();
             }
         } catch (IOException e) {
             System.out.println("Error writing credits to the file: " + e.getMessage());

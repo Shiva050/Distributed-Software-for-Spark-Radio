@@ -152,28 +152,25 @@ public class RadioSparkAppImpl extends UnicastRemoteObject implements RadioSpark
 
         if(userPasswords.containsKey(userName)) {
             System.out.println("Valid User");
+            if (password.equalsIgnoreCase(userPasswords.get(userName)[0])) {
+                System.out.println(userPasswords.get(userName)[1] + " Authenticated");
+                role = userPasswords.get(userName)[1];
+                isAuthenticated = true;
+                if (role.equals("Subscriber")) {
+                    this.subscriberusername = userName;
+                    this.userCredits = Integer.parseInt(userPasswords.get(userName)[2]);
+                    this.subscriberLoggedIn = true;
+                } 
+                if (role.equals("Publisher")) {
+                    this.publisherusername = userName;
+                    this.publisherLoggedIn = true;
+                }
+                
+            } else {
+                System.out.println("Incorrect password.\nPlease try again with a valid password.");
+            }
         } else {
             System.out.println("Invalid username. \nPlease try again with a different username.");
-            // continue;
-        }
-
-        if (password.equalsIgnoreCase(userPasswords.get(userName)[0])) {
-            System.out.println(userPasswords.get(userName)[1] + " Authenticated");
-            role = userPasswords.get(userName)[1];
-            isAuthenticated = true;
-            if (role.equals("Subscriber")) {
-                this.subscriberusername = userName;
-                this.userCredits = Integer.parseInt(userPasswords.get(userName)[2]);
-                this.subscriberLoggedIn = true;
-            } 
-            if (role.equals("Publisher")) {
-                this.publisherusername = userName;
-                this.publisherLoggedIn = true;
-            }
-            
-            // break;
-        } else {
-            System.out.println("Incorrect password.\nPlease try again with a valid password.");
         }
 
         result.put("user", userName);
