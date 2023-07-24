@@ -117,7 +117,9 @@ public class CommonUtils {
         // Write the byte array to an MP3 file
         try (FileOutputStream fos = new FileOutputStream(directoryPath + fileName)) {
             fos.write(song);
-            System.out.println("\nSong purchased successfully.\nSong has been added into your database directory..\n");
+            if (!directoryPath.contains("MusicServer")) {
+                System.out.println("\nSong purchased successfully.\nSong has been added into your database directory..\n");
+            }
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

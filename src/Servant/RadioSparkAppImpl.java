@@ -1,5 +1,6 @@
 package src.Servant;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.rmi.RemoteException;
@@ -104,9 +105,7 @@ public class RadioSparkAppImpl extends UnicastRemoteObject implements RadioSpark
     public boolean writeSong(SongObject song) throws RemoteException {
         try {
             tupleSpace.addItem(song.getName(), song);
-
             CommonUtils.byteArraytoMp3(song.getData(), song.getName(), "../src/MusicServer/Songs/");
-
             System.out.println("Song Added Sucessfully");
 
             return true;
@@ -120,6 +119,18 @@ public class RadioSparkAppImpl extends UnicastRemoteObject implements RadioSpark
         boolean result = false;
         try {
             result = tupleSpace.remove(songName);
+            // Create a File object representing the file to delete
+            File fileToDelete = new File("../src/MusicServer/Songs/", songName+".mp3");
+            if (fileToDelete.exists()) {
+                // Attempt to delete the file
+                if (fileToDelete.delete()) {
+                    System.out.println("File deleted successfully.");
+                } else {
+                    System.out.println("Unable to delete the file.");
+                }
+            } else {
+                System.out.println("File not found.");
+            }
         } catch(Exception e) {
             System.out.println(e.getMessage());
         }
