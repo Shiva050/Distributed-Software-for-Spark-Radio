@@ -84,6 +84,7 @@ public class RadioSparkAppImpl extends UnicastRemoteObject implements RadioSpark
             byte[] songData = song.getData();
     
             Map<String, Object> result = new HashMap<>();
+            result.put("user", this.subscriberusername);
             result.put("songData", songData);
             result.put("creditsUsed", creditsUsed);
             result.put("subscriberCredits", this.userCredits);
@@ -151,28 +152,25 @@ public class RadioSparkAppImpl extends UnicastRemoteObject implements RadioSpark
 
         if(userPasswords.containsKey(userName)) {
             System.out.println("Valid User");
+            if (password.equalsIgnoreCase(userPasswords.get(userName)[0])) {
+                System.out.println(userPasswords.get(userName)[1] + " Authenticated");
+                role = userPasswords.get(userName)[1];
+                isAuthenticated = true;
+                if (role.equals("Subscriber")) {
+                    this.subscriberusername = userName;
+                    this.userCredits = Integer.parseInt(userPasswords.get(userName)[2]);
+                    this.subscriberLoggedIn = true;
+                } 
+                if (role.equals("Publisher")) {
+                    this.publisherusername = userName;
+                    this.publisherLoggedIn = true;
+                }
+                
+            } else {
+                System.out.println("Incorrect password.\nPlease try again with a valid password.");
+            }
         } else {
             System.out.println("Invalid username. \nPlease try again with a different username.");
-            // continue;
-        }
-
-        if (password.equalsIgnoreCase(userPasswords.get(userName)[0])) {
-            System.out.println(userPasswords.get(userName)[1] + " Authenticated");
-            role = userPasswords.get(userName)[1];
-            isAuthenticated = true;
-            if (role.equals("Subscriber")) {
-                this.subscriberusername = userName;
-                this.userCredits = Integer.parseInt(userPasswords.get(userName)[2]);
-                this.subscriberLoggedIn = true;
-            } 
-            if (role.equals("Publisher")) {
-                this.publisherusername = userName;
-                this.publisherLoggedIn = true;
-            }
-            
-            // break;
-        } else {
-            System.out.println("Incorrect password.\nPlease try again with a valid password.");
         }
 
         result.put("user", userName);
@@ -200,6 +198,7 @@ public class RadioSparkAppImpl extends UnicastRemoteObject implements RadioSpark
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new FileReader("../Database/userList.txt"));
+            reader.readLine();
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] columns = line.split(" ");
@@ -214,7 +213,7 @@ public class RadioSparkAppImpl extends UnicastRemoteObject implements RadioSpark
                 }
             }
         } catch (IOException e) {
-            System.out.print("Relay File Reader: " + e.getMessage());
+            System.out.print("File Reader: " + e.getMessage());
         } finally {
             if (reader != null) {
                 try {

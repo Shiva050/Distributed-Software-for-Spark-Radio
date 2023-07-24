@@ -88,16 +88,23 @@ public class Subscriber {
         try {
             System.out.print("Enter the song name: ");
             String songName = input.readLine();
+            int subscriberCredits = 0;
+            int creditsUsed = 0;
 
             Map<String, Object> songFile = servant.purchaseSong(songName);
             if (songFile != null) {
+                String userName = songFile.get("user").toString();
                 byte[] songData = (byte[]) songFile.get("songData");
-                int creditsUsed = (int) songFile.get("creditsUsed");
-                int subscriberCredits = (int) songFile.get("subscriberCredits");
+                creditsUsed = (int) songFile.get("creditsUsed");
+                subscriberCredits = (int) songFile.get("subscriberCredits");
                 // Process the song data and credits used
                 CommonUtils.byteArraytoMp3(songData, songName);
+                CommonUtils.updateSubscriberCredits(userName, (subscriberCredits-creditsUsed));
                 System.out.println("Credits utilized by the song are "+creditsUsed+". You are left with "+(subscriberCredits-creditsUsed) + " credits\n");
             } else {
+                if(subscriberCredits < creditsUsed) {
+                    System.out.println("Sorry you do not have enough credits to purchase this song..");
+                }
                 // Handle the case where the song retrieval failed
                 System.out.println("Couldn't Retrieve the song from the server...\nPlease try again..");
             }
