@@ -23,3 +23,14 @@ Distributed-Software-for-Spark-Radio/
 ├── src/                     # Java source code
 ├── .gitignore               # Ignore rules
 └── README.md
+
+| Category           | Technology                            |
+| ------------------ | ------------------------------------- |
+| Language           | Java                                  |
+| Distributed Engine | Apache Spark                          |
+| Build Tool         | Maven / Gradle *(depending on setup)* |
+| Runtime            | JVM                                   |
+| Version Control    | Git / GitHub                          |
+
+<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/8397e19d-7f28-4241-834a-4eccc7b462ba" />
+
