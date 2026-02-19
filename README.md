@@ -24,6 +24,8 @@ Distributed-Software-for-Spark-Radio/
 ├── .gitignore               # Ignore rules
 └── README.md
 
+```
+
 | Category           | Technology                            |
 | ------------------ | ------------------------------------- |
 | Language           | Java                                  |
@@ -32,6 +34,6 @@ Distributed-Software-for-Spark-Radio/
 | Runtime            | JVM                                   |
 | Version Control    | Git / GitHub                          |
 
-```
+
 <img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/8397e19d-7f28-4241-834a-4eccc7b462ba" />
 
